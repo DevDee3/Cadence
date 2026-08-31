@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/*
+  Cadence design tokens.
+
+  Palette is a deep "ledger-navy" system, not black — three functional
+  accents (jade/brass/clay) rather than one decorative one, and paper-cool
+  text rather than warm cream. Deliberately avoids the near-black+single-
+  bright-accent template and the warm-cream+terracotta template.
+*/
+:root {
+  --ink-950: #0e1626; /* page background */
+  --ink-900: #111c30;
+  --ink-850: #16213a; /* panel surface */
+  --ink-750: #1f2e4d; /* raised surface / hover */
+  --ink-650: #2a3d63; /* borders */
+
+  --paper: #edeff2; /* primary text */
+  --paper-dim: #c3cad6; /* secondary heading text */
+  --muted: #7e8ca3; /* labels, captions, timestamps */
+
+  --jade: #3fa796; /* calm / safe signal */
+  --jade-dim: rgba(63, 167, 150, 0.14);
+  --brass: #c9a227; /* value / money accent, used sparingly */
+  --brass-dim: rgba(201, 162, 39, 0.14);
+  --clay: #c4622d; /* risk / alert signal */
+  --clay-dim: rgba(196, 98, 45, 0.16);
+
+  --font-display: var(--font-newsreader);
+  --font-body: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+}
+
+@theme inline {
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-850: var(--ink-850);
+  --color-ink-750: var(--ink-750);
+  --color-ink-650: var(--ink-650);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-muted: var(--muted);
+  --color-jade: var(--jade);
+  --color-brass: var(--brass);
+  --color-clay: var(--clay);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  border-color: var(--ink-650);
+}
+
+body {
+  background: var(--ink-950);
+  color: var(--paper);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Reasoning-trace text: italic serif is reserved exclusively for text
+   representing the agent's own words, so a reader learns the convention
+   at a glance — italic = the model speaking, everything else = a
+   verified on-chain fact. */
+.reasoning-voice {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-style: italic;
+  color: var(--paper-dim);
+}
+
+.tabular {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--jade);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
