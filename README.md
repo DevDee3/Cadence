@@ -179,6 +179,7 @@ NEXT_PUBLIC_COLLATERAL_TOKEN=
 NEXT_PUBLIC_DEBT_TOKEN=
 NEXT_PUBLIC_RPC_URL=https://rpc.testnet.arc.network
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_DEPLOY_BLOCK=
 
 AGENT_BACKEND_URL=http://localhost:8787
@@ -186,6 +187,15 @@ AGENT_BACKEND_API_KEY=
 ```
 
 `AGENT_BACKEND_API_KEY` is used by Next.js server route handlers and is not exposed as a browser `NEXT_PUBLIC_` variable. Its value must match backend `AGENT_API_KEY`.
+
+`NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is the public Project ID from the
+WalletConnect/Reown dashboard. `NEXT_PUBLIC_APP_URL` is Cadence's canonical
+browser URL and is included in WalletConnect metadata so a mobile wallet can
+identify Cadence and return to it after approval. Use `http://localhost:3000`
+locally, and the final HTTPS Cadence domain (without a trailing slash) in
+Vercel. Add that production domain to the project's allowed domains in the
+WalletConnect/Reown dashboard. Neither variable is a secret; do not put any
+backend keys or signer material in a `NEXT_PUBLIC_` variable.
 
 ## Supabase setup
 

@@ -83,3 +83,23 @@ npm install
 cp .env.example .env.local   # fill in addresses from Phase 1 deploy output
 npm run dev
 ```
+
+### WalletConnect
+
+Cadence supports EVM wallets only. In MetaMask's in-app browser the UI uses
+the injected MetaMask provider. In regular mobile browsers it shows
+WalletConnect, which opens its modal and delegates the MetaMask app handoff to
+WalletConnect. Phantom is deliberately not listed as a primary connector.
+
+Create a WalletConnect/Reown project and set these public browser variables:
+
+```dotenv
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_reown_project_id
+NEXT_PUBLIC_APP_URL=https://your-cadence-domain.example
+```
+
+Use `http://localhost:3000` for `NEXT_PUBLIC_APP_URL` in `.env.local` during
+local development. On Vercel, use Cadence's final HTTPS domain (without a
+trailing slash) and add that same domain to the WalletConnect/Reown project's
+allowed domains. The project ID is public configuration, but backend keys,
+private keys, and `AGENT_API_KEY` must never be prefixed with `NEXT_PUBLIC_`.

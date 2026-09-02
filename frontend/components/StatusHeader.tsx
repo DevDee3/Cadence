@@ -16,6 +16,17 @@ export function StatusHeader() {
   const [provisioningAvailable, setProvisioningAvailable] = useState(false);
   const [provisioning, setProvisioning] = useState(false);
   const [authError, setAuthError] = useState("");
+  // An injected provider exists in MetaMask's mobile browser and in the
+  // desktop extension. Do not present this option in ordinary mobile
+  // browsers, where WalletConnect is the reliable handoff path.
+  const hasInjectedMetaMask = typeof window !== "undefined" && Boolean(
+    (window as Window & { ethereum?: { isMetaMask?: boolean } }).ethereum?.isMetaMask,
+  );
+  const availableConnectors = connectors.filter((connector) => {
+    if (connector.id === "injected") return hasInjectedMetaMask;
+    if (connector.id === "walletConnect") return !hasInjectedMetaMask;
+    return false;
+  });
 
   useEffect(() => {
     // During a reload Wagmi briefly has no address while it restores the
@@ -146,7 +157,7 @@ export function StatusHeader() {
         {!isConnected && chooseWallet && (
           <div className="absolute right-0 top-12 z-20 w-64 rounded-lg border border-ink-650 bg-ink-900 p-2 shadow-xl">
             <p className="px-3 py-2 text-xs uppercase tracking-widest text-muted">Choose a wallet</p>
-            {connectors.filter((connector, index, all) => all.findIndex((candidate) => candidate.uid === connector.uid) === index).map((connector) => (
+            {availableConnectors.map((connector) => (
               <button key={connector.uid} onClick={() => { connect({ connector }); setChooseWallet(false); }} disabled={isPending} className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-sm text-paper-dim hover:bg-ink-750 hover:text-jade disabled:opacity-50">
                 <span>{connector.id === "injected" ? "MetaMask" : connector.id === "walletConnect" ? "WalletConnect" : connector.name}</span>
                 <span className="text-xs text-muted">Connect</span>

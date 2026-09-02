@@ -3,6 +3,12 @@ import { fallback } from "viem";
 import { injected, walletConnect } from "wagmi/connectors";
 import { arcTestnet } from "./chain";
 
+const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID?.trim();
+// This must be the URL users open Cadence at (not a WalletConnect or
+// MetaMask deep link). WalletConnect passes it to wallets as Cadence's
+// identity and return location after a mobile approval.
+const appUrl = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/$/, "");
+
 export const wagmiConfig = createConfig({
   chains: [arcTestnet],
   // Do not auto-discover every injected wallet. That adds Phantom and other
@@ -10,8 +16,23 @@ export const wagmiConfig = createConfig({
   multiInjectedProviderDiscovery: false,
   connectors: [
     injected({ target: "metaMask", shimDisconnect: true }),
-    ...(process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
-      ? [walletConnect({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, showQrModal: true })]
+    ...(walletConnectProjectId
+      ? [walletConnect({
+          projectId: walletConnectProjectId,
+          showQrModal: true,
+          metadata: {
+            name: "Cadence",
+            description: "Autonomous position management on Arc Testnet.",
+            url: appUrl,
+            icons: [`${appUrl}/favicon.ico`],
+            // Cadence is a website, so the canonical HTTPS URL is its return
+            // target. Do not set a native app scheme here.
+            redirect: { universal: appUrl },
+          },
+          qrModalOptions: {
+            enableMobileFullScreen: true,
+          },
+        })]
       : []),
   ],
   // Restore an already-authorized wallet on reload. The explicit MetaMask
