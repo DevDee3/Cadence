@@ -2,9 +2,11 @@
 
 import { usePositionVitals } from "@/lib/hooks";
 import { formatAmount, formatHealthFactor } from "@/lib/format";
+import { useAccount } from "wagmi";
 
 export function PositionVitals() {
   const { enabled, isLoading, healthFactor, collateralAmount, debtAmount } = usePositionVitals();
+  const { isConnected } = useAccount();
 
   const hfNumber = healthFactor !== undefined ? Number(healthFactor) / 1e18 : null;
   const zone =
@@ -15,7 +17,9 @@ export function PositionVitals() {
       <h2 className="text-xs uppercase tracking-widest text-muted mb-4">Position Vitals</h2>
 
       {!enabled ? (
-        <EmptyState message="Set NEXT_PUBLIC_LENDING_POOL and NEXT_PUBLIC_AGENT_ACCOUNT to read live position data." />
+        <EmptyState message={isConnected
+          ? "Verify your wallet and create an AgentAccount to view position data."
+          : "Connect your wallet to view your position data."} />
       ) : (
         <dl className="space-y-4">
           <div>

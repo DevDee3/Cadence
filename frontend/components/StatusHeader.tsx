@@ -1,32 +1,21 @@
 "use client";
 
-import { useAccount, useConnect, useDisconnect, useSignMessage } from "wagmi";
+import { useAccount, useDisconnect, useSignMessage } from "wagmi";
+import { useAppKit } from "@reown/appkit/react";
 import { useEffect, useState } from "react";
 import { isConfigured } from "@/lib/contracts";
 import { shortAddress } from "@/lib/format";
 
 export function StatusHeader() {
   const { address, isConnected, isReconnecting } = useAccount();
-  const { connect, connectors, isPending } = useConnect();
+  const { open } = useAppKit();
   const { disconnect } = useDisconnect();
   const { signMessageAsync, isPending: isSigning } = useSignMessage();
-  const [chooseWallet, setChooseWallet] = useState(false);
   const [verified, setVerified] = useState(false);
   const [agentAccount, setAgentAccount] = useState<string>();
   const [provisioningAvailable, setProvisioningAvailable] = useState(false);
   const [provisioning, setProvisioning] = useState(false);
   const [authError, setAuthError] = useState("");
-  // An injected provider exists in MetaMask's mobile browser and in the
-  // desktop extension. Do not present this option in ordinary mobile
-  // browsers, where WalletConnect is the reliable handoff path.
-  const hasInjectedMetaMask = typeof window !== "undefined" && Boolean(
-    (window as Window & { ethereum?: { isMetaMask?: boolean } }).ethereum?.isMetaMask,
-  );
-  const availableConnectors = connectors.filter((connector) => {
-    if (connector.id === "injected") return hasInjectedMetaMask;
-    if (connector.id === "walletConnect") return !hasInjectedMetaMask;
-    return false;
-  });
 
   useEffect(() => {
     // During a reload Wagmi briefly has no address while it restores the
@@ -99,6 +88,16 @@ export function StatusHeader() {
     }
   }
 
+  async function connectWallet() {
+    setAuthError("");
+    try {
+      await open({ view: "Connect" });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Wallet connection failed.";
+      if (!/user rejected|connection request reset/i.test(message)) setAuthError(message);
+    }
+  }
+
   return (
     <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-ink-650">
       <div>
@@ -146,25 +145,13 @@ export function StatusHeader() {
           </div>
         ) : (
           <button
-            onClick={() => setChooseWallet((value) => !value)}
-            disabled={isPending}
-            className="text-sm px-3 py-1.5 rounded-md bg-ink-750 border border-ink-650 text-paper hover:border-jade/50 hover:text-jade transition-colors disabled:opacity-50"
+            onClick={() => void connectWallet()}
+            className="text-sm px-3 py-1.5 rounded-md bg-ink-750 border border-ink-650 text-paper hover:border-jade/50 hover:text-jade transition-colors"
           >
-            {isPending ? "Connecting…" : "Connect wallet"}
+            Connect wallet
           </button>
         )}
         {authError && <p className="absolute right-0 top-12 z-10 mt-10 max-w-64 text-right text-xs text-clay">{authError}</p>}
-        {!isConnected && chooseWallet && (
-          <div className="absolute right-0 top-12 z-20 w-64 rounded-lg border border-ink-650 bg-ink-900 p-2 shadow-xl">
-            <p className="px-3 py-2 text-xs uppercase tracking-widest text-muted">Choose a wallet</p>
-            {availableConnectors.map((connector) => (
-              <button key={connector.uid} onClick={() => { connect({ connector }); setChooseWallet(false); }} disabled={isPending} className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-sm text-paper-dim hover:bg-ink-750 hover:text-jade disabled:opacity-50">
-                <span>{connector.id === "injected" ? "MetaMask" : connector.id === "walletConnect" ? "WalletConnect" : connector.name}</span>
-                <span className="text-xs text-muted">Connect</span>
-              </button>
-            ))}
-          </div>
-        )}
       </div>
     </header>
   );

@@ -3,9 +3,11 @@
 import { usePolicyRules } from "@/lib/hooks";
 import { formatAmount } from "@/lib/format";
 import { EmptyState } from "./PositionVitals";
+import { useAccount } from "wagmi";
 
 export function PolicyPanel() {
   const { enabled, isLoading, rules, cooldownSeconds } = usePolicyRules();
+  const { isConnected } = useAccount();
 
   return (
     <section className="rounded-lg border border-ink-650 bg-ink-850 p-5">
@@ -15,7 +17,9 @@ export function PolicyPanel() {
       </p>
 
       {!enabled ? (
-        <EmptyState message="Set NEXT_PUBLIC_POLICY_MODULE to read live guardrail limits." />
+        <EmptyState message={isConnected
+          ? "Verify your wallet and create an AgentAccount to view policy limits."
+          : "Connect your wallet to view your policy limits."} />
       ) : (
         <ul className="space-y-2.5">
           {rules.map((rule) => (

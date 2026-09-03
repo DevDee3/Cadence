@@ -86,10 +86,14 @@ npm run dev
 
 ### WalletConnect
 
-Cadence supports EVM wallets only. In MetaMask's in-app browser the UI uses
-the injected MetaMask provider. In regular mobile browsers it shows
-WalletConnect, which opens its modal and delegates the MetaMask app handoff to
-WalletConnect. Phantom is deliberately not listed as a primary connector.
+Cadence uses the Reown AppKit EVM modal on desktop and mobile. Clicking
+**Connect wallet** detects installed browser extensions on desktop, then opens
+the selected extension. On mobile, selecting a wallet opens that wallet's
+maintained deep link and prompts the user to approve the WalletConnect session.
+If no extension is installed, the modal provides the corresponding
+WalletConnect QR/deep-link fallback. MetaMask is prioritized; Phantom is not a
+primary recommendation. Cadence supplies normal web metadata only; it does not
+configure a native/universal redirect for the Vercel website.
 
 Create a WalletConnect/Reown project and set these public browser variables:
 
