@@ -95,6 +95,10 @@ WalletConnect QR/deep-link fallback. MetaMask is prioritized; Phantom is not a
 primary recommendation. Cadence supplies normal web metadata only; it does not
 configure a native/universal redirect for the Vercel website.
 
+Wallet sessions are restored silently by AppKit after a refresh. Cadence does
+not open the wallet modal or request an injected provider until the user clicks
+**Connect wallet** (or explicitly disconnects and reconnects).
+
 Create a WalletConnect/Reown project and set these public browser variables:
 
 ```dotenv

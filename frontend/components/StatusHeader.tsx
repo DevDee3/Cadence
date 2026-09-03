@@ -127,7 +127,6 @@ export function StatusHeader() {
 
         {isConnected && address ? (
           <div className="flex items-center gap-2">
-            {verified && agentAccount && <span className="hidden lg:inline text-[11px] text-muted" title={agentAccount}>Agent linked · {shortAddress(agentAccount as `0x${string}`)}</span>}
             {verified && !agentAccount && provisioningAvailable && <button onClick={provisionAccount} disabled={provisioning} className="text-xs rounded-md border border-brass/40 px-2.5 py-1.5 text-brass hover:bg-brass-dim disabled:opacity-60">{provisioning ? "Creating agent…" : "Create AgentAccount"}</button>}
             <button
               onClick={verifyWallet}
