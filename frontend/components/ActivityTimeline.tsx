@@ -47,7 +47,7 @@ export function ActivityTimeline() {
             const tone = outcome.status === "executed" ? "text-jade" : outcome.status === "error" || outcome.status === "failed" || outcome.status === "blocked" ? "text-clay" : "text-brass";
             return <li key={`${item.at}-${index}`} className="flex gap-3 border-b border-ink-650 pb-3 last:border-0 last:pb-0">
               <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${outcome.status === "executed" ? "bg-jade" : outcome.status === "error" || outcome.status === "blocked" ? "bg-clay" : "bg-brass"}`} />
-              <div className="min-w-0 flex-1"><div className="flex items-center justify-between gap-3"><span className={`text-xs uppercase tracking-widest ${tone}`}>{outcome.status}{action && action !== "hold" ? ` · ${action}` : ""}</span><time className="text-xs text-muted" dateTime={item.at}>{new Date(item.at).toLocaleString()}</time></div>
+              <div className="min-w-0 flex-1"><div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1"><span className={`text-xs uppercase tracking-widest break-words ${tone}`}>{outcome.status}{action && action !== "hold" ? ` · ${action}` : ""}</span><time className="text-xs text-muted" dateTime={item.at}>{new Date(item.at).toLocaleString()}</time></div>
                 {outcome.decision?.rationale && <p className="reasoning-voice text-sm mt-1">{outcome.decision.rationale}</p>}
                 {outcome.reason && <p className="text-xs text-clay mt-1">{outcome.reason}</p>}
                 {outcome.error && <p className="text-xs text-clay mt-1 break-words">{outcome.error}</p>}
@@ -64,7 +64,7 @@ export function ActivityTimeline() {
             {chainEntries.slice(0, 8).map((entry) => (
               <li key={entry.txHash} className="flex gap-3">
                 <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-jade" />
-                <div className="min-w-0 flex-1"><div className="flex items-center justify-between gap-3"><span className="text-sm text-paper">Action confirmed</span><span className="text-xs text-muted">block {entry.blockNumber.toString()}</span></div><p className="text-xs text-paper-dim mt-1">{entry.amount > 0n ? formatAmount(entry.amount, 18) : "Contract call"}</p><a href={`https://testnet.arcscan.app/tx/${entry.txHash}`} target="_blank" rel="noreferrer" className="font-mono text-xs text-jade hover:underline">{shortTxHash(entry.txHash)}</a></div>
+                <div className="min-w-0 flex-1"><div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1"><span className="text-sm text-paper">Action confirmed</span><span className="text-xs text-muted">block {entry.blockNumber.toString()}</span></div><p className="text-xs text-paper-dim mt-1">{entry.amount > 0n ? formatAmount(entry.amount, 18) : "Contract call"}</p><a href={`https://testnet.arcscan.app/tx/${entry.txHash}`} target="_blank" rel="noreferrer" className="font-mono text-xs text-jade hover:underline break-all">{shortTxHash(entry.txHash)}</a></div>
               </li>
             ))}
           </ol>

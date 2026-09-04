@@ -100,7 +100,7 @@ export function StatusHeader() {
 
   return (
     <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-ink-650">
-      <div>
+      <div className="min-w-0">
         <h1 className="font-display italic text-2xl sm:text-3xl text-paper tracking-tight">
           Cadence
         </h1>
@@ -110,7 +110,7 @@ export function StatusHeader() {
         </p>
       </div>
 
-      <div className="relative flex items-center gap-3">
+      <div className="relative flex w-full sm:w-auto flex-wrap items-center justify-between sm:justify-end gap-2 sm:gap-3">
         <span
           className={`inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border ${
             isConfigured
@@ -126,7 +126,7 @@ export function StatusHeader() {
         </span>
 
         {isConnected && address ? (
-          <div className="flex items-center gap-2">
+          <div className="flex w-full sm:w-auto flex-wrap items-center justify-end gap-2">
             {verified && !agentAccount && provisioningAvailable && <button onClick={provisionAccount} disabled={provisioning} className="text-xs rounded-md border border-brass/40 px-2.5 py-1.5 text-brass hover:bg-brass-dim disabled:opacity-60">{provisioning ? "Creating agent…" : "Create AgentAccount"}</button>}
             <button
               onClick={verifyWallet}

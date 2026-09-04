@@ -17,7 +17,7 @@ export default function Home() {
   const vitalsSamples = useHealthFactorHistory(entries);
 
   return (
-    <div className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8">
+    <div className="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-6 py-6 sm:py-8 overflow-x-hidden">
       <StatusHeader />
 
       <div className="mt-6">

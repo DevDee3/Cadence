@@ -59,7 +59,7 @@ export function AgentFeed() {
                 key={`${entry.txHash}-${i}`}
                 className="py-4 border-b border-ink-650 last:border-b-0"
               >
-                <div className="flex items-baseline justify-between gap-3 mb-1.5">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 mb-1.5">
                   <span className="text-sm text-paper font-medium">
                     {info?.label ?? "Contract call"}
                     {info && entry.amount > 0n ? (
@@ -69,7 +69,7 @@ export function AgentFeed() {
                       </span>
                     ) : null}
                   </span>
-                  <span className="text-xs text-muted font-mono tabular whitespace-nowrap">
+                  <span className="text-xs text-muted font-mono tabular">
                     {entry.timestamp ? (
                       <time dateTime={new Date(entry.timestamp).toISOString()} suppressHydrationWarning>
                         {new Date(entry.timestamp).toLocaleString()}
