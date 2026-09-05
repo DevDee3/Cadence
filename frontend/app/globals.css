@@ -9,22 +9,22 @@
   bright-accent template and the warm-cream+terracotta template.
 */
 :root {
-  --ink-950: #0e1626; /* page background */
-  --ink-900: #111c30;
-  --ink-850: #16213a; /* panel surface */
-  --ink-750: #1f2e4d; /* raised surface / hover */
-  --ink-650: #2a3d63; /* borders */
+  --ink-950: #111313; /* page background */
+  --ink-900: #171b1a;
+  --ink-850: #1d2421; /* panel surface */
+  --ink-750: #29332e; /* raised surface / hover */
+  --ink-650: #39453e; /* borders */
 
-  --paper: #edeff2; /* primary text */
-  --paper-dim: #c3cad6; /* secondary heading text */
-  --muted: #7e8ca3; /* labels, captions, timestamps */
+  --paper: #f1f1e9; /* primary text */
+  --paper-dim: #c5cdc5; /* secondary heading text */
+  --muted: #87938b; /* labels, captions, timestamps */
 
-  --jade: #3fa796; /* calm / safe signal */
-  --jade-dim: rgba(63, 167, 150, 0.14);
-  --brass: #c9a227; /* value / money accent, used sparingly */
-  --brass-dim: rgba(201, 162, 39, 0.14);
-  --clay: #c4622d; /* risk / alert signal */
-  --clay-dim: rgba(196, 98, 45, 0.16);
+  --jade: #4fbd91; /* calm / safe signal */
+  --jade-dim: rgba(79, 189, 145, 0.14);
+  --brass: #d2a84a; /* value / money accent, used sparingly */
+  --brass-dim: rgba(210, 168, 74, 0.14);
+  --clay: #d8754a; /* risk / alert signal */
+  --clay-dim: rgba(216, 117, 74, 0.16);
 
   --font-display: var(--font-newsreader);
   --font-body: var(--font-plex-sans);
