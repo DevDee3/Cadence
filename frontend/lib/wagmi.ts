@@ -27,7 +27,7 @@ createAppKit({
     name: "Cadence",
     description: "Autonomous position management on Arc Testnet.",
     url: appUrl,
-    icons: [`${appUrl}/favicon.ico`],
+    icons: [`${appUrl}/icon.png`],
   },
   // MetaMask is the EVM-first suggested wallet. Other compatible wallets and
   // detected desktop extensions remain available in the modal.
