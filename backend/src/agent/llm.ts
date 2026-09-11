@@ -21,6 +21,15 @@ export interface LLMClient {
   chat(messages: ChatMessage[], tools: readonly unknown[]): Promise<ChatResponse>;
 }
 
+function qwenNonThinkingOptions(model: string) {
+  // Qwen 3.6 can spend the whole completion budget on hidden reasoning.
+  // Cadence already performs its own bounded tool/reasoning loop, so use the
+  // model's instruction mode and reserve the response for tools or JSON.
+  return model === "qwen/qwen3.6-27b"
+    ? { reasoning_effort: "none" as const, reasoning_format: "hidden" as const }
+    : {};
+}
+
 /** Groq — the default provider. Free tier, OpenAI-compatible tool
  *  calling, and fast enough (LPU hardware) that a multi-round tool-use
  *  loop doesn't feel sluggish. Requires network access to api.groq.com,
@@ -39,7 +48,8 @@ export class GroqClient implements LLMClient {
       messages: messages as any,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       tools: tools as any,
-      max_tokens: this.cfg.LLM_MAX_OUTPUT_TOKENS,
+      max_completion_tokens: this.cfg.LLM_MAX_OUTPUT_TOKENS,
+      ...qwenNonThinkingOptions(this.cfg.GROQ_MODEL),
     });
     const choice = res.choices[0];
     return {
@@ -67,7 +77,8 @@ export class CerebrasClient implements LLMClient {
       messages: messages as any,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       tools: tools as any,
-      max_tokens: this.cfg.LLM_MAX_OUTPUT_TOKENS,
+      max_completion_tokens: this.cfg.LLM_MAX_OUTPUT_TOKENS,
+      ...qwenNonThinkingOptions(this.cfg.CEREBRAS_MODEL),
     });
     const choice = res.choices[0];
     return {
