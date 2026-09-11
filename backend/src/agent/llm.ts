@@ -39,6 +39,7 @@ export class GroqClient implements LLMClient {
       messages: messages as any,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       tools: tools as any,
+      max_tokens: this.cfg.LLM_MAX_OUTPUT_TOKENS,
     });
     const choice = res.choices[0];
     return {
@@ -66,6 +67,7 @@ export class CerebrasClient implements LLMClient {
       messages: messages as any,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       tools: tools as any,
+      max_tokens: this.cfg.LLM_MAX_OUTPUT_TOKENS,
     });
     const choice = res.choices[0];
     return {

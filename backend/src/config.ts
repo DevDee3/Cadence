@@ -58,6 +58,9 @@ const envSchema = z.object({
 
   // Loop behavior
   MAX_REASONING_ROUNDS: z.coerce.number().int().min(1).max(12).default(6),
+  // Keep each provider response below Groq's 1,000 output-tokens/minute
+  // on-demand limit while leaving enough room for tool-call arguments.
+  LLM_MAX_OUTPUT_TOKENS: z.coerce.number().int().min(256).max(900).default(800),
   POLL_INTERVAL_SECONDS: z.coerce.number().int().min(60).default(900), // 15 min default, matches PolicyModule's typical cooldown
   PORT: z.coerce.number().default(8787),
   AGENT_API_KEY: z.string().min(16).optional(),
