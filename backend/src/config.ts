@@ -53,7 +53,7 @@ const envSchema = z.object({
   GROQ_API_KEY: z.string().optional(),
   // Use a current production Groq model. Preview model IDs can be removed
   // or permission-gated without a code change.
-  GROQ_MODEL: z.string().default("qwen/qwen3-32b"),
+  GROQ_MODEL: z.string().default("openai/gpt-oss-20b"),
   CEREBRAS_API_KEY: z.string().optional(),
   CEREBRAS_BASE_URL: z.string().url().default("https://api.cerebras.ai/v1"),
   CEREBRAS_MODEL: z.string().default("llama-3.3-70b"),

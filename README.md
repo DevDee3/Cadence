@@ -125,7 +125,7 @@ BUNDLER_RPC_URL=
 
 LLM_PROVIDER=groq
 GROQ_API_KEY=
-GROQ_MODEL=qwen/qwen3-32b
+GROQ_MODEL=openai/gpt-oss-20b
 CEREBRAS_API_KEY=
 CEREBRAS_BASE_URL=https://api.cerebras.ai/v1
 CEREBRAS_MODEL=llama-3.3-70b
