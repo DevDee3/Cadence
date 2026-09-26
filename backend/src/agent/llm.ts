@@ -25,7 +25,7 @@ function qwenNonThinkingOptions(model: string) {
   // Qwen 3.6 can spend the whole completion budget on hidden reasoning.
   // Cadence already performs its own bounded tool/reasoning loop, so use the
   // model's instruction mode and reserve the response for tools or JSON.
-  return model === "qwen/qwen3.6-27b"
+  return model === "qwen/qwen3.6-27b" || model === "qwen/qwen3-32b"
     ? { reasoning_effort: "none" as const, reasoning_format: "hidden" as const }
     : {};
 }

@@ -51,6 +51,8 @@ const envSchema = z.object({
   // LLM provider
   LLM_PROVIDER: z.enum(["groq", "cerebras", "mock"]).default("groq"),
   GROQ_API_KEY: z.string().optional(),
+  // Use a current production Groq model. Preview model IDs can be removed
+  // or permission-gated without a code change.
   GROQ_MODEL: z.string().default("qwen/qwen3-32b"),
   CEREBRAS_API_KEY: z.string().optional(),
   CEREBRAS_BASE_URL: z.string().url().default("https://api.cerebras.ai/v1"),
