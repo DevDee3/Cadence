@@ -489,4 +489,4 @@ For production, keep the Render service continuously running, retain logs, confi
 
 ## License and status
 
-Cadence is an active development project. Review the contract license and repository history before redistributing. The current application has been tested on Arc Testnet; production-network deployment requires separate contract deployment, keys, addresses, infrastructure, and security validation.
+Cadence is released under the [MIT License](LICENSE). It is an active development project and has been tested on Arc Testnet; production-network deployment requires separate contract deployment, keys, addresses, infrastructure, and security validation.
